@@ -507,7 +507,9 @@ export default function CustomerEnquiriesPage({ userId }: CustomerEnquiriesPageP
                   variant: 'outline',
                 }}
               />
-            )}
+            )
+          </div>
+        )}
           </div>
         )}
       </div>

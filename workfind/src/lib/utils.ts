@@ -66,6 +66,14 @@ export function formatNumber(num: number): string {
   return new Intl.NumberFormat('en-US').format(num)
 }
 
+export function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString('en-LK', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+}
+
 export function getSriLankanPhoneFormat(phone: string): string {
   const cleaned = phone.replace(/\D/g, '')
   if (cleaned.startsWith('94')) {
