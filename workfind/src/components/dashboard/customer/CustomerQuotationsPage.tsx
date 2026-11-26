@@ -378,9 +378,8 @@ export default function CustomerQuotationsPage({ userId }: CustomerQuotationsPag
     }
 
     return (
-      <>
-        <div className="space-y-4">
-          {paginatedQuotations.map((quote) => (
+      <div className="space-y-4">
+        {paginatedQuotations.map((quote) => (
             <Card key={quote.id} variant="outlined" padding="lg">
               <div className="flex flex-col lg:flex-row lg:items-start gap-6">
                 <div className="flex items-center gap-4 min-w-[200px]">
@@ -526,7 +525,7 @@ export default function CustomerQuotationsPage({ userId }: CustomerQuotationsPag
       )}
     </div>
   )
-  }
+}
 
   const addToast = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
     const id = Date.now().toString()

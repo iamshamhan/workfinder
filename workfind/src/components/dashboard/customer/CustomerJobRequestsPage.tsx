@@ -322,9 +322,8 @@ export default function CustomerJobRequestsPage({ userId }: CustomerJobRequestsP
     }
 
     return (
-      <>
-        <div className="space-y-4">
-          {paginatedJobs.map((job) => (
+      <div className="space-y-4">
+        {paginatedJobs.map((job) => (
             <Card key={job.id} variant="outlined" padding="lg">
               <div className="flex flex-col lg:flex-row lg:items-center gap-6">
                 <div className="flex-1 min-w-0">
