@@ -238,7 +238,9 @@ export default function CustomerProfilePage({ userId }: CustomerProfilePageProps
                       </div>
                     )}
                   </div>
-                  {errors.avatar && <p className="mt-1 text-sm text-error-600">{errors.avatar}</p>}
+                </div>
+                {errors.avatar && <p className="mt-1 text-sm text-error-600">{errors.avatar}</p>}
+              </div>
 
               <Input
                 label="Full Name"

@@ -617,10 +617,10 @@ export async function searchListings(params: SearchListingsParams): Promise<Pagi
       query = query.order('published_at', { ascending: false });
       break;
     case 'price_low':
-      query = query.order('price_amount', { ascending: true, nullsLast: true });
+      query = query.order('price_amount', { ascending: true, nullsFirst: false });
       break;
     case 'price_high':
-      query = query.order('price_amount', { ascending: false, nullsLast: true });
+      query = query.order('price_amount', { ascending: false, nullsFirst: false });
       break;
     default:
       query = query.order('view_count', { ascending: false });
@@ -1005,7 +1005,8 @@ export async function getQuotations(
 }
 
 export async function getQuotationsForJobRequest(jobRequestId: string): Promise<Quotation[]> {
-  return getQuotations({ job_request_id: jobRequestId }, { limit: 100 });
+  const result = await getQuotations({ job_request_id: jobRequestId }, { limit: 100 });
+  return result.data;
 }
 
 export async function createQuotation(input: CreateQuotationInput): Promise<Quotation> {

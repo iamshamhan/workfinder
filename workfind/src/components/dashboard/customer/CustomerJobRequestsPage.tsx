@@ -209,7 +209,7 @@ export default function CustomerJobRequestsPage({ userId }: CustomerJobRequestsP
     const matchesStatus = !statusFilter || job.status === statusFilter
     const matchesUrgency = !urgencyFilter || job.urgency === urgencyFilter
     return matchesSearch && matchesStatus && matchesUrgency
-  })
+  }))
 
   const sortedJobs = [...filteredJobs].sort((a, b) => {
     switch (sortBy) {
@@ -378,9 +378,9 @@ export default function CustomerJobRequestsPage({ userId }: CustomerJobRequestsP
                     Delete
                   </Button>
                 </div>
-              </Card>
+              </div>
+            </Card>
           ))}
-        </div>
 
         {totalPages > 1 && (
           <Pagination
@@ -408,7 +408,7 @@ export default function CustomerJobRequestsPage({ userId }: CustomerJobRequestsP
     const matchesStatus = !statusFilter || job.status === statusFilter
     const matchesUrgency = !urgencyFilter || job.urgency === urgencyFilter
     return matchesSearch && matchesStatus && matchesUrgency
-  }
+  })
 
   const sortedJobs = [...filteredJobs].sort((a, b) => {
     switch (sortBy) {

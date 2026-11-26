@@ -107,7 +107,7 @@ export function generateFilePath(
   const extension = fileName.split('.').pop() || '';
   const baseName = fileName.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9-_]/g, '_').substring(0, 50);
 
-  const parts = [bucket];
+  const parts: string[] = [bucket];
   if (prefix) parts.push(prefix);
   parts.push(userId);
   parts.push(`${timestamp}-${random}-${baseName}.${extension}`);
@@ -270,7 +270,7 @@ export async function listFiles(
   bucket: StorageBucket,
   folderPath: string,
   options?: { limit?: number; offset?: number; sortBy?: { column: string; order: 'asc' | 'desc' } }
-): Promise<{ name: string; id: string; updated_at: string; created_at: string; last_accessed_at: string; metadata: Record<string, unknown> }[]> {
+): Promise<{ name: string; id: string | null; updated_at: string; created_at: string; last_accessed_at: string; metadata: Record<string, unknown> }[]> {
   const supabase = createClient();
 
   const { data, error } = await supabase.storage
@@ -295,7 +295,7 @@ export async function listFilesServer(
   bucket: StorageBucket,
   folderPath: string,
   options?: { limit?: number; offset?: number; sortBy?: { column: string; order: 'asc' | 'desc' } }
-): Promise<{ name: string; id: string; updated_at: string; created_at: string; last_accessed_at: string; metadata: Record<string, unknown> }[]> {
+): Promise<{ name: string; id: string | null; updated_at: string; created_at: string; last_accessed_at: string; metadata: Record<string, unknown> }[]> {
   const supabase = await createServerClient();
 
   const { data, error } = await supabase.storage
@@ -417,17 +417,23 @@ export async function downloadFileServer(bucket: StorageBucket, path: string): P
 export async function getFileInfo(
   bucket: StorageBucket,
   path: string
-): Promise<{ id: string; name: string; updated_at: string; created_at: string; last_accessed_at: string; metadata: Record<string, unknown> } | null> {
+): Promise<{ id: string | null; name: string; updated_at: string; created_at: string; last_accessed_at: string; metadata: Record<string, unknown> } | null> {
   const supabase = createClient();
+  const parts = path.split('/');
+  const fileName = parts.pop() || '';
+  const folder = parts.join('/');
 
-  const { data, error } = await supabase.storage.from(bucket).getFileInfo(path);
+  const { data, error } = await supabase.storage.from(bucket).list(folder, {
+    search: fileName,
+  });
 
   if (error) {
     if (error.message.includes('not found')) return null;
     throw new Error(`Get file info failed: ${error.message}`);
   }
 
-  return data;
+  const file = data?.find(f => f.name === fileName);
+  return file || null;
 }
 
 /**
@@ -436,17 +442,23 @@ export async function getFileInfo(
 export async function getFileInfoServer(
   bucket: StorageBucket,
   path: string
-): Promise<{ id: string; name: string; updated_at: string; created_at: string; last_accessed_at: string; metadata: Record<string, unknown> } | null> {
+): Promise<{ id: string | null; name: string; updated_at: string; created_at: string; last_accessed_at: string; metadata: Record<string, unknown> } | null> {
   const supabase = await createServerClient();
+  const parts = path.split('/');
+  const fileName = parts.pop() || '';
+  const folder = parts.join('/');
 
-  const { data, error } = await supabase.storage.from(bucket).getFileInfo(path);
+  const { data, error } = await supabase.storage.from(bucket).list(folder, {
+    search: fileName,
+  });
 
   if (error) {
     if (error.message.includes('not found')) return null;
     throw new Error(`Get file info failed: ${error.message}`);
   }
 
-  return data;
+  const file = data?.find(f => f.name === fileName);
+  return file || null;
 }
 
 /**

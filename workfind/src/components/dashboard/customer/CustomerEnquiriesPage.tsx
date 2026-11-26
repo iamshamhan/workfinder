@@ -473,46 +473,45 @@ export default function CustomerEnquiriesPage({ userId }: CustomerEnquiriesPageP
                           )}
                         </div>
                       </div>
-                    </Card>
-                  ))}
-                </div>
-
-                {totalPages > 1 && (
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    totalItems={sortedEnquiries.length}
-                    itemsPerPage={itemsPerPage}
-                    onPageChange={setCurrentPage}
-                  />
-                )}
+                    </div>
+                  </Card>
+                ))}
               </div>
-            ) : (
-              <EmptyState
-                title="No enquiries found"
-                description={searchQuery || statusFilter || contactMethodFilter
-                  ? 'Try adjusting your filters or search terms.'
-                  : 'You haven\'t sent any enquiries yet. Start browsing services and contact providers!'}
-                action={{
-                  label: searchQuery || statusFilter || contactMethodFilter ? 'Clear filters' : 'Browse Services',
-                  onClick: () => {
-                    if (searchQuery || statusFilter || contactMethodFilter) {
-                      setSearchQuery('')
-                      setStatusFilter('')
-                      setContactMethodFilter('')
-                    } else {
-                      window.location.href = '/browse'
-                    }
-                  },
-                  variant: 'outline',
-                }}
-              />
-            )
-          </div>
-        )}
-          </div>
-        )}
-      </div>
+
+              {totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  totalItems={sortedEnquiries.length}
+                  itemsPerPage={itemsPerPage}
+                  onPageChange={setCurrentPage}
+                />
+              )}
+            </>
+          ) : (
+            <EmptyState
+              title="No enquiries found"
+              description={searchQuery || statusFilter || contactMethodFilter
+                ? 'Try adjusting your filters or search terms.'
+                : 'You haven\'t sent any enquiries yet. Start browsing services and contact providers!'}
+              action={{
+                label: searchQuery || statusFilter || contactMethodFilter ? 'Clear filters' : 'Browse Services',
+                onClick: () => {
+                  if (searchQuery || statusFilter || contactMethodFilter) {
+                    setSearchQuery('')
+                    setStatusFilter('')
+                    setContactMethodFilter('')
+                  } else {
+                    window.location.href = '/browse'
+                  }
+                },
+                variant: 'outline',
+              }}
+            />
+          )}
+        </>
+      )}
     </div>
-  )
+  </div>
+)
 }
