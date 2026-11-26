@@ -509,23 +509,23 @@ export default function CustomerQuotationsPage({ userId }: CustomerQuotationsPag
                     </Badge>
                   )}
                 </div>
+              </div>
             </div>
           </Card>
         ))}
-      </div>
 
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          totalItems={sortedQuotations.length}
-          itemsPerPage={itemsPerPage}
-          onPageChange={setCurrentPage}
-        />
-      )}
-    </div>
-  )
-}
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={sortedQuotations.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+          />
+        )}
+      </div>
+    )
+  }
 
   const addToast = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
     const id = Date.now().toString()
